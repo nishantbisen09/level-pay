@@ -1,0 +1,103 @@
+{
+    "info": {
+        "_postman_id": "4a457c6e-9b06-4b7c-8de0-3dc0490211d0",
+        "name": "Wallet System API",
+        "description": "API documentation for Wallet System",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Initialize Wallet",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"balance\": 100.50,\n  \"name\": \"My Wallet\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/setup",
+                    "protocol": "{{base_url}}",
+                    "host": [],
+                    "path": [
+                        "setup"
+                    ]
+                },
+                "description": "Initialize a new wallet with an initial balance.\n\n**Endpoint:** `/setup`\n\n**Method:** `POST`\n\n**Request Body:**\n```json\n{\n  \"balance\": 100.50,\n  \"name\": \"My Wallet\"\n}\n```\n\n- `balance` (number, required): The initial balance of the wallet. Must be a positive number.\n- `name` (string, optional): A name for the wallet (max 128 characters).\n\n**Response:**\n```json\n{\n  \"id\": \"4b79b8e8-33de-4a01-9a9a-506cad33db7f\",\n  \"balance\": 100.50,\n  \"transactionId\": \"5f249017-0345-4e0d-aecc-6a9dfb6d8509\",\n  \"name\": \"My Wallet\",\n  \"date\": \"2023-07-29T12:34:56.789Z\"\n}\n```\n\n- `id`: The unique identifier of the newly created wallet.\n- `balance`: The current balance of the wallet.\n- `transactionId`: The unique identifier of the initial setup transaction.\n- `name`: The name of the wallet.\n- `date`: The timestamp when the wallet was created."
+            },
+            "response": []
+        },
+        {
+            "name": "Credit / Debit Amount",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"amount\": 50.25,\n  \"description\": \"Payment received\",\n  \"type\": \"CREDIT\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/transact/:walletId",
+                    "protocol": "{{base_url}}",
+                    "host": [],
+                    "path": [
+                        "transact",
+                        ":walletId"
+                    ]
+                },
+                "description": "Credit or debit the specified amount to the wallet.\n\n**Endpoint:** `/transact/:walletId`\n\n**Method:** `POST`\n\n**URL Parameters:**\n- `walletId` (string, required): The ID of the wallet to perform the transaction on.\n\n**Request Body:**\n```json\n{\n  \"amount\": 50.25,\n  \"description\": \"Payment received\",\n  \"type\": \"CREDIT\"\n}\n```\n\n- `amount` (number, required): The amount to credit (positive number) or debit (negative number) to the wallet.\n- `description` (string, optional): A description of the transaction (max 256 characters).\n- `type` (string, required): The type of transaction, either 'CREDIT' or 'DEBIT'.\n\n**Response:**\n```json\n{\n  \"balance\": 150.75,\n  \"transactionId\": \"249b3a7e-5724-45ad-91ab-702def7f8a81\"\n}\n```\n\n- `balance`: The updated balance of the wallet after the transaction.\n- `transactionId`: The unique identifier of the transaction."
+            },
+            "response": []
+        },
+        {
+            "name": "Fetch Transactions",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/transactions?walletId=4b79b8e8-33de-4a01-9a9a-506cad33db7f&skip=0&limit=5",
+                    "protocol": "{{base_url}}",
+                    "host": [],
+                    "path": [
+                        "transactions"
+                    ],
+                    "query": [
+                        {
+                            "key": "walletId",
+                            "value": "4b79b8e8-33de-4a01-9a9a-506cad33db7f"
+                        },
+                        {
+                            "key": "skip",
+                            "value": "0"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "5"
+                        }
+                    ]
+                },
+                "description": "Fetch the recent transactions on a wallet.\n\n**Endpoint:** `/transactions`\n\n**Method:** `GET`\n\n**Query Parameters:**\n- `walletId` (string, required): The ID of the wallet to fetch transactions for.\n- `skip` (number, optional): Number of transactions to skip (default: 0).\n- `limit` (number, optional): Maximum number of transactions to return (default: 10).\n\n**Example:** `/transactions?walletId=4b79b8e8-33de-4a01-9a9a-506cad33db7f&skip=0&limit=5`\n\n**Response:**\n```json\n[\n  {\n    \"id\": \"9e0a3e13-3e07-416b-8e56-98ad4d6c0550\",\n    \"walletId\": \"4b79b8e8-33de-4a01-9a9a-506cad33db7f\",\n    \"amount\": 50.25,\n    \"balance\": 150.75,\n    \"description\": \"Payment received\",\n    \"date\": \"2023-07-29T12:35:26.123Z\",\n    \"type\": \"CREDIT\"\n  },\n  {\n    \"id\": \"725d201a-0ec4-4eb1-9013-4e0ac9276a62\",\n    \"walletId\": \"4b79b8e8-33de-4a01-9a9a-506cad33db7f\",\n    \"amount\": -25.00,\n    \"balance\": 125.75,\n    \"description\": \"Purchase\",\n    \"date\": \"2023-07-29T12:36:07.789Z\",\n    \"type\": \"DEBIT\"\n  },\n  // More transactions...\n]\n```\n\n- `id`: The unique identifier of the transaction.\n- `walletId`: The ID of the wallet the transaction is associated with.\n- `amount`: The amount of the transaction.\n- `balance`: The balance of the wallet after the transaction.\n- `description`: A description of the transaction (max 256 characters).\n- `date`: The timestamp when the transaction occurred.\n- `type`: The type of transaction (CREDIT or DEBIT)."
+            },
+            "response": []
+        },
+        {
+            "name": "Get Wallet Details",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{base_url}}/wallet/4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+                    "protocol": "{{base_url}}",
+                    "host": [],
+                    "path": [
+                        "wallet",
+                        "4b79b8e8-33de-4a01-9a9a-506cad33db7f"
+                    ]
+                },
+                "description": "Get details of a specific wallet.\n\n**Endpoint:** `/wallet/:id`\n\n**Method:** `GET`\n\n**URL Parameters:**\n- `id` (string, required): The ID of the wallet to fetch details for.\n\n**Example:** `/wallet/4b79b8e8-33de-4a01-9a9a-506cad33db7f`\n\n**Response:**\n```json\n{\n  \"id\": \"4b79b8e8-33de-4a01-9a9a-506cad33db7f\",\n  \"balance\": 125.75,\n  \"name\": \"My Wallet\",\n  \"date\": \"2023-07-29T12:35:26.123Z\"\n}\n```\n\n- `id`: The unique identifier of the wallet.\n- `balance`: The current balance of the wallet.\n- `name`: The name of the wallet.\n- `date`: The timestamp when the wallet was created."
+            },
+            "response": []
+        }
+    ],
+    "protocolProfileBehavior": {}
+}
