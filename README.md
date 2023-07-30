@@ -1,70 +1,185 @@
-# Getting Started with Create React App
+# Wallet System API
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a Node.js backend service for a simple Wallet System that supports wallet setup, credit/debit transactions, fetching transactions on the wallet, and getting wallet details.
 
-## Available Scripts
+## Endpoints and Sample Queries
 
-In the project directory, you can run:
+1.  Initialize Wallet
 
-### `npm start`
+    **Endpoint:** `/wallet/setup`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    **Method:** `POST`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    **Sample Query:**
 
-### `npm test`
+        ```javascript
+        POST {{base_url}}/wallet/setup
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+        {
+          "balance": 100.50,
+          "name": "My Wallet"
+        }
+        ```
+        **Response:**
 
-### `npm run build`
+        ```javascript
+        Status: 200 OK
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+        {
+          "id": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+          "balance": 100.50,
+          "transactionId": "5f249017-0345-4e0d-aecc-6a9dfb6d8509",
+          "name": "My Wallet",
+          "date": "2023-07-29T12:34:56.789Z"
+        }
+        ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    <br />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2.  Credit / Debit Amount
 
-### `npm run eject`
+        **Endpoint:** `/transaction/transact/:walletId`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+        **Method:** `POST`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+        **Sample Query:**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+        ```javascript
+        POST {{base_url}}/transaction/transact/4b79b8e8-33de-4a01-9a9a-506cad33db7f
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+        {
+          "amount": 50.25,
+          "description": "Payment received",
+          "type": "CREDIT"
+        }
+        ```
 
-## Learn More
+        **Response:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+        ```javascript
+        Status: 200 OK
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+        {
+          "balance": 150.75,
+          "transactionId": "249b3a7e-5724-45ad-91ab-702def7f8a81"
+        }
+        ```
 
-### Code Splitting
+    <br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3.  Fetch Transactions
 
-### Analyzing the Bundle Size
+        **Endpoint:** `/transaction/transactions`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+        **Method:** `GET`
 
-### Making a Progressive Web App
+        **Sample Query:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+        ```javascript
+        GET {{base_url}}/transaction/transactions?walletId=4b79b8e8-33de-4a01-9a9a-506cad33db7f&skip=0&limit=5
+        ```
 
-### Advanced Configuration
+        **Response:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+        ```javascript
+        Status: 200 OK
 
-### Deployment
+        [
+          {
+          "id": "9e0a3e13-3e07-416b-8e56-98ad4d6c0550",
+          "walletId": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+          "amount": 50.25,
+          "balance": 150.75,
+          "description": "Payment received",
+          "date": "2023-07-29T12:35:26.123Z",
+          "type": "CREDIT"
+          },
+          {
+          "id": "725d201a-0ec4-4eb1-9013-4e0ac9276a62",
+          "walletId": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+          "amount": -25.00,
+          "balance": 125.75,
+          "description": "Purchase",
+          "date": "2023-07-29T12:36:07.789Z",
+          "type": "DEBIT"
+          },
+          // More transactions...
+        ]
+        ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+    <br />
 
-### `npm run build` fails to minify
+4.  Get Wallet Details
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    **Endpoint:** `/wallet/:id`
+
+    **Method:** `GET`
+
+    **Sample Query:**
+
+    ```javascript
+    GET {{base_url}}/wallet/4b79b8e8-33de-4a01-9a9a-506cad33db7f
+    ```
+
+    **Response:**
+
+    ```javascript
+    Status: 200 OK
+
+    {
+      "id": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+      "balance": 125.75,
+      "name": "My Wallet",
+      "date": "2023-07-29T12:35:26.123Z"
+    }
+    ```
+
+## Setup Instructions
+
+To set up and run the project locally, follow these steps:
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/nishantbisen09/level-pay.git
+cd level-pay
+```
+
+- Copy all contents from `.env.sample` to `.env` and put all appropriate values for the environment variables
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+The server will run at http://localhost:3000 by default.
+
+## Database and Query Design
+
+The project uses MongoDB as the database for storing wallet information and transactions. The database design includes two collections: `Wallets` and `Transactions`.
+
+### Wallets Collection:
+
+Each wallet is represented by a document in the `Wallets` collection. The wallet document contains the following fields:
+
+- `_id`: Unique identifier of the wallet (UUID).
+- `balance`: Current balance of the wallet.
+- `name`: Optional name for the wallet (max 128 characters).
+- `date`: Timestamp of when the wallet was created.
+
+### Transactions Collection:
+
+Each transaction is represented by a document in the `Transactions` collection. The transaction document contains the following fields:
+
+- `_id`: Unique identifier of the transaction (UUID).
+- `walletId`: ID of the wallet associated with the transaction (references the `Wallets` collection).
+- `amount`: The amount of the transaction (with 4 decimal precision).
+- `balance`: The balance of the wallet after the transaction.
+- `description`: A description of the transaction (max 256 characters).
+- `date`: Timestamp of when the transaction occurred.
+- `type`: The type of the transaction, either 'CREDIT' or 'DEBIT'.
+
+The above design allows for efficient querying of transactions related to a specific wallet, and it ensures data integrity and consistency.
