@@ -1,0 +1,6 @@
+# Ignore artifacts:
+client/build
+client/coverage
+
+server/build
+server/coverage
