@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('joi')
 
 module.exports = {
   // POST /api/transactions/:walletId
@@ -21,4 +21,4 @@ module.exports = {
       limit: Joi.number().min(1).max(100).default(10), // 'limit' should be between 1 and 100
     },
   },
-};
+}

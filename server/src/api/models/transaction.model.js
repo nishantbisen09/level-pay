@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');
+const mongoose = require('mongoose')
+const { v4: uuidv4 } = require('uuid')
 
 const transactionSchema = new mongoose.Schema({
   _id: { type: String, default: uuidv4 }, // system generated ids)
@@ -9,6 +9,6 @@ const transactionSchema = new mongoose.Schema({
   description: { type: String, required: true },
   date: { type: Date, default: Date.now },
   type: { type: String, enum: ['CREDIT', 'DEBIT'], required: true },
-});
+})
 
-module.exports = mongoose.model('Transaction', transactionSchema);
+module.exports = mongoose.model('Transaction', transactionSchema)

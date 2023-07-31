@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('joi')
 
 module.exports = {
   // POST /api/wallets/setup
@@ -15,4 +15,4 @@ module.exports = {
       id: Joi.string().uuid({ version: 'uuidv4' }).required(), // Wallet ID should be a valid UUID v4
     },
   },
-};
+}
