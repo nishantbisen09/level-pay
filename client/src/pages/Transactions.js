@@ -24,6 +24,7 @@ const columns = [
       const isCredit = params.row.type === 'CREDIT'
       return (
         <Typography variant="body" color={isCredit ? 'green' : 'red'}>
+          {isCredit ? '+' : ''}
           {params.row.amount * (isCredit ? 1 : -1)}
         </Typography>
       )

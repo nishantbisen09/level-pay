@@ -89,7 +89,7 @@ const WalletApp = () => {
       const response = await walletService.creditDebitAmount(
         walletId,
         amount,
-        description,
+        description || 'Transaction',
         type
       )
       setWalletBalance(response.balance)
