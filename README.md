@@ -12,100 +12,100 @@ This is a Node.js backend service for a simple Wallet System that supports walle
 
     **Sample Query:**
 
-        ```javascript
-        POST {{base_url}}/wallet/setup
+     ```javascript
+     POST {{base_url}}/wallet/setup
 
-        {
-          "balance": 100.50,
-          "name": "My Wallet"
-        }
-        ```
-        **Response:**
+     {
+       "balance": 100.50,
+       "name": "My Wallet"
+     }
+     ```
+     **Response:**
 
-        ```javascript
-        Status: 200 OK
+     ```javascript
+     Status: 200 OK
 
-        {
-          "id": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
-          "balance": 100.50,
-          "transactionId": "5f249017-0345-4e0d-aecc-6a9dfb6d8509",
-          "name": "My Wallet",
-          "date": "2023-07-29T12:34:56.789Z"
-        }
+     {
+       "id": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+       "balance": 100.50,
+       "transactionId": "5f249017-0345-4e0d-aecc-6a9dfb6d8509",
+       "name": "My Wallet",
+       "date": "2023-07-29T12:34:56.789Z"
+     }
         ```
 
     <br />
 
 2.  Credit / Debit Amount
 
-        **Endpoint:** `/transaction/transact/:walletId`
+     **Endpoint:** `/transaction/transact/:walletId`
 
-        **Method:** `POST`
+     **Method:** `POST`
 
-        **Sample Query:**
+     **Sample Query:**
 
-        ```javascript
-        POST {{base_url}}/transaction/transact/4b79b8e8-33de-4a01-9a9a-506cad33db7f
+     ```javascript
+     POST {{base_url}}/transaction/transact/4b79b8e8-33de-4a01-9a9a-506cad33db7f
 
-        {
-          "amount": 50.25,
-          "description": "Payment received",
-          "type": "CREDIT"
-        }
-        ```
+     {
+       "amount": 50.25,
+       "description": "Payment received",
+       "type": "CREDIT"
+     }
+     ```
 
-        **Response:**
+     **Response:**
 
-        ```javascript
-        Status: 200 OK
+     ```javascript
+     Status: 200 OK
 
-        {
-          "balance": 150.75,
-          "transactionId": "249b3a7e-5724-45ad-91ab-702def7f8a81"
-        }
-        ```
+     {
+       "balance": 150.75,
+       "transactionId": "249b3a7e-5724-45ad-91ab-702def7f8a81"
+     }
+     ```
 
     <br />
 
 3.  Fetch Transactions
 
-        **Endpoint:** `/transaction/transactions`
+     **Endpoint:** `/transaction/transactions`
 
-        **Method:** `GET`
+     **Method:** `GET`
 
-        **Sample Query:**
+     **Sample Query:**
 
-        ```javascript
-        GET {{base_url}}/transaction/transactions?walletId=4b79b8e8-33de-4a01-9a9a-506cad33db7f&skip=0&limit=5
-        ```
+     ```javascript
+     GET {{base_url}}/transaction/transactions?walletId=4b79b8e8-33de-4a01-9a9a-506cad33db7f&skip=0&limit=5
+     ```
 
-        **Response:**
+     **Response:**
 
-        ```javascript
-        Status: 200 OK
+     ```javascript
+     Status: 200 OK
 
-        [
-          {
-          "id": "9e0a3e13-3e07-416b-8e56-98ad4d6c0550",
-          "walletId": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
-          "amount": 50.25,
-          "balance": 150.75,
-          "description": "Payment received",
-          "date": "2023-07-29T12:35:26.123Z",
-          "type": "CREDIT"
-          },
-          {
-          "id": "725d201a-0ec4-4eb1-9013-4e0ac9276a62",
-          "walletId": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
-          "amount": -25.00,
-          "balance": 125.75,
-          "description": "Purchase",
-          "date": "2023-07-29T12:36:07.789Z",
-          "type": "DEBIT"
-          },
-          // More transactions...
-        ]
-        ```
+     [
+       {
+       "id": "9e0a3e13-3e07-416b-8e56-98ad4d6c0550",
+       "walletId": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+       "amount": 50.25,
+       "balance": 150.75,
+       "description": "Payment received",
+       "date": "2023-07-29T12:35:26.123Z",
+       "type": "CREDIT"
+       },
+       {
+       "id": "725d201a-0ec4-4eb1-9013-4e0ac9276a62",
+       "walletId": "4b79b8e8-33de-4a01-9a9a-506cad33db7f",
+       "amount": -25.00,
+       "balance": 125.75,
+       "description": "Purchase",
+       "date": "2023-07-29T12:36:07.789Z",
+       "type": "DEBIT"
+       },
+       // More transactions...
+     ]
+     ```
 
     <br />
 
@@ -143,6 +143,7 @@ To set up and run the project locally, follow these steps:
 ```bash
 git clone https://github.com/nishantbisen09/level-pay.git
 cd level-pay
+cd server
 ```
 
 - Copy all contents from `.env.sample` to `.env` and put all appropriate values for the environment variables
@@ -156,6 +157,22 @@ npm run dev
 ```
 
 The server will run at http://localhost:3000 by default.
+
+### Run client locally
+- In the root folder ( level-pay )
+```bash
+   cd client
+```
+
+```bash
+npm install
+```
+
+```bash
+npm start
+```
+
+The client will run at http://localhost:8000 by default.
 
 ## Database and Query Design
 
