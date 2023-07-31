@@ -1,6 +1,14 @@
 # Wallet System API
 
-This is a Node.js backend service for a simple Wallet System that supports wallet setup, credit/debit transactions, fetching transactions on the wallet, and getting wallet details.
+This is a Node.js backend service for a simple Wallet System that supports wallet setup,
+credit/debit transactions, fetching transactions on the wallet, and getting wallet details.
+
+#### [App Demo](https://level-pay.netlify.app/).
+#### Code Walkthrough!
+1. [Folder Structure and Architecture](https://www.loom.com/share/b7d1757eeab147ec8028f00316e69165?sid=ae125335-52fc-4cd4-8290-2703b4898570)
+2. [Understanding CLient and Server Arch](https://www.loom.com/share/3330b2ae0ddb46ff9695118ce37970b0?sid=18939d5f-7a17-4476-860e-215fe192a56e)
+3. [Understanding Wallet, Transactions and Deployment](https://www.loom.com/share/fa798b0b7ecb4b579eeeecdd51cf4749?sid=c8b16507-d2d1-4236-b111-26e6e45ce9b1)
+4. [App Demo UI](https://www.loom.com/share/541b08ab24114c49944a235b355e7d76?sid=9465471e-b948-4cf5-862b-a8a25f67db78)
 
 ## Endpoints and Sample Queries
 
