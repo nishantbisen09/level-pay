@@ -151,7 +151,7 @@ const Transactions = () => {
             background: '#FEA1A1',
             mb: 2,
           }}
-          href={`https://${document.location.hostname}/transaction/downloadCSV/${walletId}`}
+          href={`https://level-pay.onrender.com/transaction/downloadCSV/${walletId}`}
           target="_blank"
         >
           Download CSV
