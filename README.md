@@ -32,9 +32,7 @@ This is a Node.js backend service for a simple Wallet System that supports walle
        "name": "My Wallet",
        "date": "2023-07-29T12:34:56.789Z"
      }
-        ```
-
-    <br />
+     ```
 
 2.  Credit / Debit Amount
 
@@ -64,8 +62,6 @@ This is a Node.js backend service for a simple Wallet System that supports walle
        "transactionId": "249b3a7e-5724-45ad-91ab-702def7f8a81"
      }
      ```
-
-    <br />
 
 3.  Fetch Transactions
 
