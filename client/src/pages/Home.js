@@ -83,7 +83,7 @@ const WalletApp = () => {
     const amount = parseFloat(parseFloat(transactionAmount).toFixed(4))
     const type = isCreditTransaction ? 'CREDIT' : 'DEBIT'
     setTransactionAmount('')
-
+    setDescription('')
     try {
       showLoader()
       const response = await walletService.creditDebitAmount(
